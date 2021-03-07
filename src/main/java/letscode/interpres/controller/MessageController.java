@@ -44,7 +44,18 @@ public class MessageController {
             @PathVariable("id") Message messageFromDb,
             @RequestBody Message message
     ) {
-        BeanUtils.copyProperties(message, messageFromDb, "id");
+
+        messageFromDb.setText(message.getText());
+
+        return messageRepo.save(messageFromDb);
+    }
+
+    @PutMapping("translation/{id}")
+    public Message translate(
+            @PathVariable("id") Message messageFromDb,
+            @RequestBody Message message
+    ) {
+        messageFromDb.setTranslation(message.getTranslation());
 
         return messageRepo.save(messageFromDb);
     }

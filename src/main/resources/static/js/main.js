@@ -11,31 +11,35 @@ function getIndex(list, id) {
 
 
 var messageApi = Vue.resource('/message{/id}');
+var messageTranslationApi = Vue.resource('/message/translation{/id}');
 
 Vue.component('message-form', {
-    props: ['messages', 'messageAttr'],
-    data: function() {
+    props: ['messages', 'messageAttr', 'action'],
+    data: function () {
         return {
             text: '',
-            id: ''
+            id: '',
+            translation: ''
         }
     },
     watch: {
-        messageAttr: function(newVal, oldVal) {
+        messageAttr: function (newVal, oldVal) {
             this.text = newVal.text;
             this.id = newVal.id;
+            this.translation = newVal.translation;
         }
     },
     template:
         '<div>' +
-            '<input type="text" placeholder="Write something" v-model="text" />' +
-            '<input type="button" value="Save" @click="save" />' +
+        '<input type="text" placeholder="Write something" v-model="text" />' +
+        '<input type="button" value="Save" @click="save" />' +
         '</div>',
     methods: {
-        save: function() {
-            var message = { text: this.text };
+        save: function () {
 
-            if (this.id) {
+            if (this.action == 'edit') {
+                var message = {text: this.text}
+
                 messageApi.update({id: this.id}, message).then(result =>
                     result.json().then(data => {
                         var index = getIndex(this.messages, data.id);
@@ -44,7 +48,19 @@ Vue.component('message-form', {
                         this.id = ''
                     })
                 )
+
+            } else if (this.action == 'translate') { //this.action == 'translate'
+                var translationMessage = {translation: this.text};
+                messageTranslationApi.update({id: this.id}, translationMessage).then(result =>
+                    result.json().then(data => {
+                        var index = getIndex(this.messages, data.id);
+                        this.messages.splice(index, 1, data);
+                        this.text = ''
+                        this.id = ''
+                    })
+                )
             } else {
+                var message = {text: this.text};
                 messageApi.save({}, message).then(result =>
                     result.json().then(data => {
                         this.messages.push(data);
@@ -52,22 +68,28 @@ Vue.component('message-form', {
                     })
                 )
             }
+
         }
     }
 });
 
 Vue.component('message-row', {
-    props: ['message', 'editMethod', 'messages'],
+    props: ['message', 'editMethod', 'translateMethod', 'messages'],
     template: '<div>' +
         '<i>({{ message.id }})</i> {{ message.text }}' +
         '<span style="position: absolute; right: 0">' +
             '<input type="button" value="Edit" @click="edit" />' +
+            '<input type="button" value="Translate" @click="translate" />' +
             '<input type="button" value="X" @click="del" />' +
         '</span>' +
+        '<i>({{ message.translation }})</i>' +
         '</div>',
     methods: {
         edit: function() {
             this.editMethod(this.message);
+        },
+        translate: function() {
+            this.translateMethod(this.message);
         },
         del: function() {
             messageApi.remove({id: this.message.id}).then(result => {
@@ -83,14 +105,15 @@ Vue.component('messages-list', {
   props: ['messages'],
   data: function() {
     return {
-        message: null
+        message: null,
+        action: ''
     }
   },
   template:
     '<div style="position: relative; width: 300px;">' +
-        '<message-form :messages="messages" :messageAttr="message" />' +
+        '<message-form :messages="messages" :messageAttr="message" :action="action" />' +
         '<message-row v-for="message in messages" :key="message.id" :message="message" ' +
-            ':editMethod="editMethod" :messages="messages" />' +
+            ':editMethod="editMethod" :translateMethod="translateMethod" :messages="messages" />' +
     '</div>',
   created: function() {
     messageApi.get().then(result =>
@@ -102,6 +125,11 @@ Vue.component('messages-list', {
   methods: {
     editMethod: function(message) {
         this.message = message;
+        this.action = 'edit'
+    },
+    translateMethod: function(message) {
+        this.message = message;
+        this.action = 'translate'
     }
   }
 });
