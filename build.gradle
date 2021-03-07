@@ -23,9 +23,25 @@ repositories {
 	mavenCentral()
 }
 
+//task genJaxb {
+//	ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
+//	ext.classesDir = "${buildDir}/classes/jaxb"
+//	outputs.dir classesDir
+//}
+//
+//configurations {
+//	jaxb
+//}
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	runtime('org.springframework.boot:spring-boot-devtools')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.postgresql:postgresql')
+    compile('org.projectlombok:lombok')
+//    compile('javax.xml.bind:jaxb-api')
+//    jaxb('com.sun.xml.bind:jaxb-core')
+//    jaxb('com.sun.xml.bind:jaxb-impl')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
