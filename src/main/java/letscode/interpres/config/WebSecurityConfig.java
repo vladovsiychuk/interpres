@@ -1,7 +1,5 @@
 package letscode.interpres.config;
 
-import letscode.interpres.domain.User;
-import letscode.interpres.repo.UserDetailsRepo;
 //import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 //import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
