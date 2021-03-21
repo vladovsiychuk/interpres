@@ -17,8 +17,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .antMatcher("/**")
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/", "/login**", "/js/**", "/error**").permitAll()
                 .anyRequest().authenticated()
+                .and().logout().logoutSuccessUrl("/").permitAll()
                 .and().oauth2Login().userInfoEndpoint()
                 .oidcUserService(customOidcUserService);
     }

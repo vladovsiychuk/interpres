@@ -31,5 +31,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.security:spring-security-oauth2-client')
 	implementation group: 'org.springframework.security.oauth.boot', name: 'spring-security-oauth2-autoconfigure', version: '2.4.3'
+	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+	compile('org.springframework.session:spring-session-jdbc')
 }
 
