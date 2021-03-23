@@ -18,6 +18,8 @@ public class CustomOidcUserService extends OidcUserService {
     @Autowired
     private UserDetailsRepo userRepository;
 
+    User MyUser;
+
     @Override
     public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
         OidcUser oidcUser = super.loadUser(userRequest);
@@ -40,8 +42,20 @@ public class CustomOidcUserService extends OidcUserService {
             user.setName(googleUserInfo.getName());
 
             userRepository.save(user);
+
+            this.MyUser = user;
+        }else {
+            this.MyUser = userOptional.get();
         }
 
         return oidcUser;
+    }
+
+    public User getMyUser() {
+        return MyUser;
+    }
+
+    public void setMyUser(User myUser) {
+        MyUser = myUser;
     }
 }
