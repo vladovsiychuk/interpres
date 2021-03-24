@@ -20,6 +20,9 @@ public class Message {
     @JsonView(Views.IdName.class)
     private String text;
 
+    @JsonView(Views.IdName.class)
+    private String translation;
+
     @Column(updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonView(Views.FullMessage.class)
@@ -39,6 +42,14 @@ public class Message {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getTranslation() {
+        return translation;
+    }
+
+    public void setTranslation(String translation) {
+        this.translation = translation;
     }
 
     public LocalDateTime getCreationDate() {
