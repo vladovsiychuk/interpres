@@ -15,6 +15,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .antMatcher("/**")
                 .authorizeRequests()
                 .antMatchers("/", "/login**", "/js/**", "/error**").permitAll()
@@ -22,5 +23,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().logoutSuccessUrl("/cleanUser").permitAll()
                 .and().oauth2Login().userInfoEndpoint()
                 .oidcUserService(customOidcUserService);
+
     }
 }
