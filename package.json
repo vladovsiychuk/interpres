@@ -4,6 +4,7 @@
     "start": "webpack serve"
   },
   "dependencies": {
+    "npm": "^7.7.6",
     "vue": "^2.6.12",
     "vue-resource": "^1.5.2"
   },
@@ -13,6 +14,7 @@
     "babel-loader": "^8.2.2",
     "vue-loader": "^15.9.6",
     "vue-loader-v16": "^16.0.0-beta.5.4",
+    "vue-template-compiler": "^2.6.12",
     "vue-template-loader": "^1.1.0",
     "webpack": "^5.28.0",
     "webpack-cli": "^4.5.0",
