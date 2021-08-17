@@ -69,6 +69,7 @@ public class MainController {
 
     @GetMapping("/cleanUser")
     public RedirectView logout() {
+
         return new RedirectView("/");
     }
 }
