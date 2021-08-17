@@ -29,7 +29,6 @@ public class MainController {
     @Value("${spring.profiles.active}")
     private String profile;
 
-
     @Autowired
     HttpSession session;
 
