@@ -51,8 +51,10 @@ public class MainController {
             userId = (String) oidcUser.getClaims().get("sub");
         }
 
-        data.put("profile", userDetailsRepo.findById(userId).orElse(null));
-        data.put("messages", messageRepo.findAll());
+        if (userId != "") {
+            data.put("profile", userDetailsRepo.findById(userId).orElse(null));
+            data.put("messages", messageRepo.findAll());
+        }
 
         model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(profile));
