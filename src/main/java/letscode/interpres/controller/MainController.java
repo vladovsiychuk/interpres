@@ -65,10 +65,4 @@ public class MainController {
 
         return new RedirectView("/");
     }
-
-    @GetMapping("/cleanUser")
-    public RedirectView logout() {
-
-        return new RedirectView("/");
-    }
 }
