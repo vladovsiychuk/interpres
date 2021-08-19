@@ -1,14 +1,14 @@
 <template>
     <v-app>
-        <v-toolbar app>
+        <v-app-bar app>
             <v-toolbar-title>Interpres</v-toolbar-title>
             <v-spacer></v-spacer>
             <span v-if="profile">{{profile.name}}</span>
             <v-btn v-if="profile" icon href="/logout">
                 <v-icon>exit_to_app</v-icon>
             </v-btn>
-        </v-toolbar>
-        <v-content>
+        </v-app-bar>
+        <v-main>
             <v-container v-if="!profile">
                 You need to log in through
                 <a href="/login">Google</a>
@@ -16,7 +16,7 @@
             <v-container v-if="profile">
                 <messages-list :messages="messages" />
             </v-container>
-        </v-content>
+        </v-main>
     </v-app>
 </template>
 

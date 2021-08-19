@@ -6,7 +6,7 @@
                      :message="message"
                      :editMessage="editMessage"
                      :deleteMessage="deleteMessage"
-                     :messages="messages" />1
+                     :messages="messages" />
     </v-layout>
 </template>
 
